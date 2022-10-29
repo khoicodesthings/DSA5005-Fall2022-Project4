@@ -49,6 +49,11 @@ char* node::getChar() {
 GL* node::getDown() {
 	return down;
 }
+
+// display
+void node::displayChar() {
+
+}
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // class Generalized List
 class GL
