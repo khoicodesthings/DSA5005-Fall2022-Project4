@@ -25,6 +25,30 @@ public:
 	// display
 	void displayChar();
 };
+
+// default constructor
+node::node() {
+	charVariable = NULL;
+	down = NULL;
+}
+
+// setters
+void node::setCharVariable(char var) {
+	charVariable = &var;
+}
+
+void node::setDown(GL* d) {
+	down = d;
+}
+
+// getters
+char* node::getChar() {
+	return charVariable;
+}
+
+GL* node::getDown() {
+	return down;
+}
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // class Generalized List
 class GL
