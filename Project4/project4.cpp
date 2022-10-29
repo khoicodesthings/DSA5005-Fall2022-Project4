@@ -52,7 +52,7 @@ GL* node::getDown() {
 
 // display
 void node::displayChar() {
-
+	cout << charVariable << endl;
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // class Generalized List
