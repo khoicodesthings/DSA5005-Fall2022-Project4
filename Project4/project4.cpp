@@ -79,5 +79,8 @@ int main()
 	//GL* expressions = new GL[numExpressions]; // an array of expressions / an array of GL objects
 		// read one line/expression at a time and call the buildGL method for each expression[i]
 		// read in and process all the options using switch case
+	node* test = new node();
+	test->setCharVariable('K');
+	test->displayChar();
 	return 0;
 } // main
