@@ -63,12 +63,13 @@ protected:
 public:
 	GL();                                         // default constructor
 	void buildGL(string l);                       // to build the generalized list
-		bool findCharInExpression(char findThisChar); // given a char, find it in a given expression
-		int LCAdistance(char char1, char char2);      // find the LCA distance of two char in the expression
-		int heightOfGL();                             // return the height of the GL using the GL
-		void searchDuplicates();                      // print all the duplicates in the GL
-		void display();                               // display list
+	bool findCharInExpression(char findThisChar); // given a char, find it in a given expression
+	int LCAdistance(char char1, char char2);      // find the LCA distance of two char in the expression
+	int heightOfGL();                             // return the height of the GL using the GL
+	void searchDuplicates();                      // print all the duplicates in the GL
+	void display();                               // display list
 };
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 int main()
 {
 	int numExpressions; // number of expressions
