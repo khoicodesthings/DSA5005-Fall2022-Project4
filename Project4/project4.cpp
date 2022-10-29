@@ -42,11 +42,11 @@ public:
 };
 int main()
 {
-	//int numExpressions; // number of expressions
+	int numExpressions; // number of expressions
 	//char option;        // command from the input file
 	// read the number of expressions given
-	//cin >> numExpressions;
-	//cout << "Number of expressions: " << numExpressions << endl;
+	cin >> numExpressions;
+	cout << "Number of expressions: " << numExpressions << endl;
 	//GL* expressions = new GL[numExpressions]; // an array of expressions / an array of GL objects
 		// read one line/expression at a time and call the buildGL method for each expression[i]
 		// read in and process all the options using switch case
