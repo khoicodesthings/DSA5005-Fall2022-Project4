@@ -72,21 +72,25 @@ public:
 
 // constructor
 GL::GL() {
-	node temp;
-	for (int i = 0; i < 100; i++) {
-		head.push_back(temp);
-	}
+	// List is already initalized so I shouldn't need to 
+	// do anything in the default constructor
 }
 
 // operators
 void GL::buildGL(string l) {
 	// recursively build the generalized list
 	// Take in the string char by char
-	// Build the list, if run into '(' char
+	// Build the list, if run into any '(' char
+	// after the first '(' char then 
 	// Build another list using recursion
 	int stringLength = l.length();
 	for (int i = 0; i < stringLength; i++) {
-		cout << l[i];
+		if (l[i] == '(' || l[i] == ')') {
+			continue;
+		}
+		else {
+			cout << l[i];
+		}
 	}
 }
 
@@ -124,7 +128,10 @@ int main()
 	string first, second, third;
 	cin >> first >> second >> third;
 	expressions[0].buildGL(first);
+	cout << endl;
 	expressions[0].buildGL(second);
+	cout << endl;
 	expressions[0].buildGL(third);
+	cout << endl;
 	return 0;
 } // main
