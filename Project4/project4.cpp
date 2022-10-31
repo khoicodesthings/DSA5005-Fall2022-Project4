@@ -84,6 +84,10 @@ void GL::buildGL(string l) {
 	// Take in the string char by char
 	// Build the list, if run into '(' char
 	// Build another list using recursion
+	int stringLength = l.length();
+	for (int i = 0; i < stringLength; i++) {
+		cout << l[i];
+	}
 }
 
 bool GL::findCharInExpression(char findThisChar) {
@@ -114,11 +118,13 @@ int main()
 	// read the number of expressions given
 	cin >> numExpressions;
 	cout << "Number of expressions: " << numExpressions << endl;
-	//GL* expressions = new GL[numExpressions]; // an array of expressions / an array of GL objects
+	GL* expressions = new GL[numExpressions]; // an array of expressions / an array of GL objects
 		// read one line/expression at a time and call the buildGL method for each expression[i]
 		// read in and process all the options using switch case
-	node* test = new node();
-	test->setCharVariable('K');
-	test->displayChar();
+	string first, second, third;
+	cin >> first >> second >> third;
+	expressions[0].buildGL(first);
+	expressions[0].buildGL(second);
+	expressions[0].buildGL(third);
 	return 0;
 } // main
