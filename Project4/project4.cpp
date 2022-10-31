@@ -72,7 +72,10 @@ public:
 
 // constructor
 GL::GL() {
-	
+	node temp;
+	for (int i = 0; i < 100; i++) {
+		head.push_back(temp);
+	}
 }
 
 // operators
