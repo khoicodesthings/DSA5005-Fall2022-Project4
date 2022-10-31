@@ -69,6 +69,40 @@ public:
 	void searchDuplicates();                      // print all the duplicates in the GL
 	void display();                               // display list
 };
+
+// constructor
+GL::GL() {
+	
+}
+
+// operators
+void GL::buildGL(string l) {
+	// recursively build the generalized list
+	// Take in the string char by char
+	// Build the list, if run into '(' char
+	// Build another list using recursion
+}
+
+bool GL::findCharInExpression(char findThisChar) {
+	return false;
+}
+
+int GL::LCAdistance(char char1, char char2) {
+	return 0;
+}
+
+int GL::heightOfGL() {
+	return 0;
+}
+
+void GL::searchDuplicates() {
+
+}
+
+void GL::display() {
+
+}
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 int main()
 {
