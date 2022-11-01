@@ -85,11 +85,13 @@ void GL::buildGL(string l) {
 	// Build another list using recursion
 	int stringLength = l.length();
 	for (int i = 0; i < stringLength; i++) {
-		if (l[i] == '(' || l[i] == ')') {
+		if (l[i] == '(' || l[i] == ')') { // skip the parentheses for now
 			continue;
 		}
-		else {
-			cout << l[i];
+		else { // if it's a letter or numeric char, build a node object
+			node* temp = new node();
+			temp->setCharVariable(l[i]);
+			temp->displayChar();
 		}
 	}
 }
