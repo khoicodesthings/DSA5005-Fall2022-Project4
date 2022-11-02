@@ -85,13 +85,22 @@ void GL::buildGL(string l) {
 	// Build another list using recursion
 	int stringLength = l.length();
 	for (int i = 0; i < stringLength; i++) {
-		if (l[i] == '(' || l[i] == ')') { // skip the parentheses for now
-			continue;
+		if (l[i] == '(') { // recursion here
+			// call buildGL(subString)
+			node* temp = new node();
+			string subString; // need to figure out how to generate this substring
+			GL* tempGL = new GL();
+			tempGL->buildGL(subString);
+			temp->setDown(tempGL);
+			head.push_back(*temp);
+		}
+		else if (l[i] == ')') {
+			break;
 		}
 		else { // if it's a letter or numeric char, build a node object
 			node* temp = new node();
 			temp->setCharVariable(l[i]);
-			temp->displayChar();
+			head.push_back(*temp);
 		}
 	}
 }
