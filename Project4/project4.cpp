@@ -106,7 +106,8 @@ void GL::buildGL(string l) {
 		}*/
 		else { // if it's a letter or numeric char, build a node object
 			node* temp = new node();
-			temp->setCharVariable(l[i]);
+			char* tempChar = new char(l[i]);
+			temp->setCharVariable(*tempChar);
 			temp->displayChar();
 			head.push_back(*temp);	
 		}
