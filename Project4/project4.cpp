@@ -109,7 +109,7 @@ void GL::buildGL(string l) {
 			node* temp = new node();
 			char* tempChar = new char(l[i]);
 			temp->setCharVariable(*tempChar);
-			temp->displayChar();
+			//temp->displayChar();
 			head.push_back(*temp);	
 		}
 	}
