@@ -84,20 +84,21 @@ void GL::buildGL(string l) {
 	// after the first '(' char then 
 	// Build another list using recursion
 	int stringLength = l.length();
-	for (int i = 0; i < stringLength; i++) {
+	// i starts at 1 since index 0 is (
+	for (int i = 1; i < stringLength; i++) {
 		if (l[i] == '(') { // recursion here
 			// call buildGL(subString)
 			node* temp = new node();
 			int j = i+1;
 			string subString;
-			while (l[j] != ')') {
+			while (l[j] != ')') { // this will not work if there are more than 2 levels I think
 				// need to figure out how to generate this substring
 				subString = subString + l[j];
 				j++;
 			}
 			cout << subString;
 			GL* tempGL = new GL();
-			tempGL->buildGL(subString); // recursion here
+			tempGL->buildGL(subString); // recursion here, once called, should go to else block
 			temp->setDown(tempGL);
 			head.push_back(*temp);
 		}
@@ -151,7 +152,7 @@ int main()
 	cout << endl;
 	expressions[0].buildGL(second);
 	cout << endl;
-	expressions[0].buildGL(third);
-	cout << endl;
+	//expressions[0].buildGL(third);
+	//cout << endl;
 	return 0;
 } // main
