@@ -101,14 +101,14 @@ void GL::buildGL(string l) {
 			temp->setDown(tempGL);
 			head.push_back(*temp);
 		}
-		else if (l[i] == ')') {
+		/*else if (l[i] == ')') {
 			break; 
-		}
+		}*/
 		else { // if it's a letter or numeric char, build a node object
 			node* temp = new node();
 			temp->setCharVariable(l[i]);
-			head.push_back(*temp);
 			temp->displayChar();
+			head.push_back(*temp);	
 		}
 	}
 }
