@@ -88,19 +88,27 @@ void GL::buildGL(string l) {
 		if (l[i] == '(') { // recursion here
 			// call buildGL(subString)
 			node* temp = new node();
-			string subString; // need to figure out how to generate this substring
+			int j = i+1;
+			string subString;
+			while (l[j] != ')') {
+				// need to figure out how to generate this substring
+				subString = subString + l[j];
+				j++;
+			}
+			cout << subString;
 			GL* tempGL = new GL();
-			tempGL->buildGL(subString);
+			tempGL->buildGL(subString); // recursion here
 			temp->setDown(tempGL);
 			head.push_back(*temp);
 		}
 		else if (l[i] == ')') {
-			break;
+			break; 
 		}
 		else { // if it's a letter or numeric char, build a node object
 			node* temp = new node();
 			temp->setCharVariable(l[i]);
-			head.push_back(*temp);
+			//head.push_back(*temp);
+			temp->displayChar();
 		}
 	}
 }
