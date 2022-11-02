@@ -90,17 +90,27 @@ void GL::buildGL(string l) {
 		if (l[i] == '(') { // recursion here
 			// count is still 0 here
 			node* temp = new node();
-			int j = i+1;
+			//int j = i+1;
 			string subString;
-			if (l[j] == '(') {
-				paraCount++;
+			for (int j = i + 1; j < stringLength; j++) {
+				// trying to generate the subString
+				if (l[j] != '(' && l[j] != ')') {
+					subString = subString + l[j];
+				}
+				if (l[j] == '(') {
+					subString = subString + l[j];
+					paraCount++;
+				}
+				// if paraCount >0 then push ) into subString
+				if (l[j] == ')' && paraCount != 0) {
+					subString = subString + l[j];
+					paraCount--;
+				}
+				if (paraCount == 0) {
+					break;
+				}
 			}
-			while (l[j] != ')') { // this will not work if there are more than 2 levels I think
-				// need to figure out how to generate this substring
-				subString = subString + l[j];
-				j++;
-			}
-			//cout << subString;
+			cout << "This sub string is: " << subString << endl;
 			GL* tempGL = new GL();
 			tempGL->buildGL(subString); // recursion here, once called, should go to else block
 			temp->setDown(tempGL);
@@ -156,7 +166,7 @@ int main()
 	cout << endl;
 	expressions[0].buildGL(second);
 	cout << endl;
-	//expressions[0].buildGL(third);
-	//cout << endl;
+	expressions[0].buildGL(third);
+	cout << endl;
 	return 0;
 } // main
