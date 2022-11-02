@@ -106,7 +106,7 @@ void GL::buildGL(string l) {
 					subString = subString + l[j];
 					paraCount--;
 				}
-				if (paraCount == 0) {
+				if (l[j] == ')' && paraCount == 0) {
 					break;
 				}
 			}
@@ -163,10 +163,10 @@ int main()
 	string first, second, third;
 	cin >> first >> second >> third;
 	expressions[0].buildGL(first);
-	cout << endl;
+	
 	expressions[0].buildGL(second);
-	cout << endl;
+	
 	expressions[0].buildGL(third);
-	cout << endl;
+	
 	return 0;
 } // main
