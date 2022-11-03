@@ -52,7 +52,7 @@ GL* node::getDown() {
 
 // display
 void node::displayChar() {
-	cout << charVariable << endl;
+	cout << charVariable << " ";
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // class Generalized List
@@ -104,7 +104,7 @@ void GL::buildGL(string l) {
 					break;
 				}
 			}
-			cout << "This sub string is: " << subString << endl;
+			cout << "This sub string is: " << subString << endl; // for debugging
 			GL* tempGL = new GL();
 			tempGL->buildGL(subString); // recursion here, once called, should go to else block
 			temp->setDown(tempGL);
@@ -121,6 +121,14 @@ void GL::buildGL(string l) {
 }
 
 bool GL::findCharInExpression(char findThisChar) {
+	for (int i = 0; i < head.size(); i++) {
+		list<node>::iterator iter = head.begin();
+		advance(iter, i);
+		node thisNode = *iter;
+		if (thisNode.getChar() == &findThisChar) {
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -128,15 +136,25 @@ int GL::LCAdistance(char char1, char char2) {
 	return 0;
 }
 
-int GL::heightOfGL() {
+int GL::heightOfGL() { // apparently only 4 lines
+	list<node>::iterator iter = head.begin();
 	return 0;
 }
 
 void GL::searchDuplicates() {
-
+	list<node>::iterator iter = head.begin();
 }
 
 void GL::display() {
+	cout << "Displaying all expressions:" << endl;
+	list<node>::iterator iter = head.begin();
+	for (int i = 0; i < head.size(); i++) {
+		node thisNode = *iter;
+		char* tempChar = thisNode.getChar();
+		node* display = new node();
+		display->setCharVariable(*tempChar);
+		display->displayChar();
+	}
 
 }
 
@@ -154,10 +172,12 @@ int main()
 	string first, second, third;
 	cin >> first >> second >> third;
 	expressions[0].buildGL(first);
+
+	expressions[0].display();
+
+	//expressions[1].buildGL(second);
 	
-	expressions[0].buildGL(second);
-	
-	expressions[0].buildGL(third);
+	//expressions[2].buildGL(third);
 	
 	return 0;
 } // main
