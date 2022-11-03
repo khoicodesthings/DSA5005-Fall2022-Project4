@@ -78,11 +78,6 @@ GL::GL() {
 
 // operators
 void GL::buildGL(string l) {
-	// recursively build the generalized list
-	// Take in the string char by char
-	// Build the list, if run into any '(' char
-	// after the first '(' char then 
-	// Build another list using recursion
 	int paraCount = 0; // int var to keep track of how many open (
 	int stringLength = l.length();
 	// i starts at 1 since index 0 is (
@@ -93,7 +88,6 @@ void GL::buildGL(string l) {
 			//int j = i+1;
 			string subString;
 			for (int j = i + 1; j < stringLength; j++) {
-				// trying to generate the subString
 				if (l[j] != '(' && l[j] != ')') {
 					subString = subString + l[j];
 				}
@@ -116,9 +110,6 @@ void GL::buildGL(string l) {
 			temp->setDown(tempGL);
 			head.push_back(*temp);
 		}
-		/*else if (l[i] == ')') {
-			break; 
-		}*/
 		else { // if it's a letter or numeric char, build a node object
 			node* temp = new node();
 			char* tempChar = new char(l[i]);
