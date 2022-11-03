@@ -104,7 +104,7 @@ void GL::buildGL(string l) {
 					break;
 				}
 			}
-			cout << "This sub string is: " << subString << endl; // for debugging
+			//cout << "This sub string is: " << subString << endl; // for debugging
 			GL* tempGL = new GL();
 			tempGL->buildGL(subString); // recursion here, once called, should go to else block
 			temp->setDown(tempGL);
@@ -114,7 +114,7 @@ void GL::buildGL(string l) {
 			node* temp = new node();
 			char* tempChar = new char(l[i]);
 			temp->setCharVariable(*tempChar);
-			temp->displayChar();
+			//temp->displayChar();
 			head.push_back(*temp);	
 		}
 	}
@@ -146,9 +146,10 @@ void GL::searchDuplicates() {
 }
 
 void GL::display() {
-	cout << "Displaying all expressions:" << endl;
+	cout << "Displaying all expressions: ";
 	list<node>::iterator iter = head.begin();
-	for (int i = 0; i < head.size(); i++) {
+	for (int i = 0; i < head.size() - 1; i++) {
+		advance(iter, i);
 		node thisNode = *iter;
 		char* tempChar = thisNode.getChar();
 		node* display = new node();
@@ -172,12 +173,17 @@ int main()
 	string first, second, third;
 	cin >> first >> second >> third;
 	expressions[0].buildGL(first);
-
+	/*cout << endl;
 	expressions[0].display();
+	cout << endl;
+	expressions[1].buildGL(second);
+	cout << endl;
+	expressions[1].display();
+	cout << endl;
+	expressions[2].buildGL(third);
+	cout << endl;
+	expressions[2].display();
+	cout << endl;*/
 
-	//expressions[1].buildGL(second);
-	
-	//expressions[2].buildGL(third);
-	
 	return 0;
 } // main
