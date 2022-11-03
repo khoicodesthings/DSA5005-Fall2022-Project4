@@ -78,7 +78,7 @@ GL::GL() {
 
 // operators
 void GL::buildGL(string l) {
-	int paraCount = 0; // int var to keep track of how many open (
+	/*int paraCount = 0; // int var to keep track of how many open (
 	int stringLength = l.length();
 	// i starts at 1 since index 0 is (
 	for (int i = 1; i < stringLength; i++) {
@@ -117,6 +117,32 @@ void GL::buildGL(string l) {
 			//temp->displayChar();
 			head.push_back(*temp);	
 		}
+	}*/
+	for (int i = 1; i < l.length(); i++) {
+		if (l[i] == '(') {
+			string sub;
+			node nNode;
+			nNode.setCharVariable(NULL);
+
+			for (int j = i + 1; j < l.length(); j++) {
+				if (l[j] == ')') {
+					break;
+				}
+				else {
+					sub += l[j];
+				}
+			}
+			GL* newGL = new GL();
+			nNode.setDown(newGL);
+			head.push_back(nNode);
+			newGL->buildGL(sub);
+		}
+		else {
+			node nNode;
+			nNode.setCharVariable(l[i]);
+			head.push_back(nNode);
+		}
+		
 	}
 }
 
@@ -176,7 +202,7 @@ int main()
 	string first, second, third;
 	cin >> first >> second >> third;
 	expressions[0].buildGL(first);
-	cout << endl;
+	cout << "Expression 0: ";
 	expressions[0].display();
 	cout << endl;
 	//expressions[1].buildGL(second);
