@@ -52,7 +52,7 @@ GL* node::getDown() {
 
 // display
 void node::displayChar() {
-	cout << charVariable << " ";
+	cout << *charVariable << " ";
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // class Generalized List
@@ -96,11 +96,11 @@ void GL::buildGL(string l) {
 					paraCount++;
 				}
 				// if paraCount >0 then push ) into subString
-				if (l[j] == ')' && paraCount != 0) {
+				if (l[j] == ')' && paraCount > 0) {
 					subString = subString + l[j];
 					paraCount--;
 				}
-				if (l[j] == ')' && paraCount == 0) {
+				if (paraCount == 0) {
 					break;
 				}
 			}
@@ -112,8 +112,8 @@ void GL::buildGL(string l) {
 		}
 		else { // if it's a letter or numeric char, build a node object
 			node* temp = new node();
-			char* tempChar = new char(l[i]);
-			temp->setCharVariable(*tempChar);
+			//char* tempChar = new char(l[i]);
+			temp->setCharVariable(l[i]);
 			//temp->displayChar();
 			head.push_back(*temp);	
 		}
@@ -147,14 +147,17 @@ void GL::searchDuplicates() {
 
 void GL::display() {
 	cout << "Displaying all expressions: ";
-	list<node>::iterator iter = head.begin();
-	for (int i = 0; i < head.size() - 1; i++) {
+	list<node>::iterator iter;
+	/*for (int i = 0; i < head.size() - 1; i++) {
 		advance(iter, i);
 		node thisNode = *iter;
 		char* tempChar = thisNode.getChar();
 		node* display = new node();
 		display->setCharVariable(*tempChar);
 		display->displayChar();
+	}*/
+	for (iter = head.begin(); iter != head.end(); iter++) {
+		iter->displayChar();
 	}
 
 }
@@ -173,17 +176,17 @@ int main()
 	string first, second, third;
 	cin >> first >> second >> third;
 	expressions[0].buildGL(first);
-	/*cout << endl;
+	cout << endl;
 	expressions[0].display();
 	cout << endl;
-	expressions[1].buildGL(second);
-	cout << endl;
-	expressions[1].display();
-	cout << endl;
-	expressions[2].buildGL(third);
-	cout << endl;
-	expressions[2].display();
-	cout << endl;*/
+	//expressions[1].buildGL(second);
+	//cout << endl;
+	//expressions[1].display();
+	//cout << endl;
+	//expressions[2].buildGL(third);
+	//cout << endl;
+	//expressions[2].display();
+	//cout << endl;
 
 	return 0;
 } // main
