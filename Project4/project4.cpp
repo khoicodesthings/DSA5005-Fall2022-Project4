@@ -34,7 +34,8 @@ node::node() {
 
 // setters
 void node::setCharVariable(char var) {
-	charVariable = &var;
+	char* newvar = new char(var);
+	charVariable = newvar;
 }
 
 void node::setDown(GL* d) {
@@ -80,13 +81,18 @@ GL::GL() {
 void GL::buildGL(string l) {
 	/*int paraCount = 0; // int var to keep track of how many open (
 	int stringLength = l.length();
+	//string subString;
 	// i starts at 1 since index 0 is (
 	for (int i = 1; i < stringLength; i++) {
 		if (l[i] == '(') { // recursion here
 			// count is still 0 here
-			node* temp = new node();
+			node temp;
+			temp.setCharVariable(NULL);
+			temp.setDown(NULL);
+			paraCount = 1;
 			//int j = i+1;
 			string subString;
+			subString = subString + l[i];
 			for (int j = i + 1; j < stringLength; j++) {
 				if (l[j] != '(' && l[j] != ')') {
 					subString = subString + l[j];
@@ -100,50 +106,61 @@ void GL::buildGL(string l) {
 					subString = subString + l[j];
 					paraCount--;
 				}
-				if (paraCount == 0) {
+				if (l[j] == ')' && paraCount == 0) {
+					//subString = subString + l[j];
 					break;
 				}
 			}
-			//cout << "This sub string is: " << subString << endl; // for debugging
+			cout << "This sub string is: " << subString << endl; // for debugging
 			GL* tempGL = new GL();
 			tempGL->buildGL(subString); // recursion here, once called, should go to else block
-			temp->setDown(tempGL);
-			head.push_back(*temp);
+			temp.setDown(tempGL);
+			head.push_back(temp);
 		}
 		else { // if it's a letter or numeric char, build a node object
-			node* temp = new node();
+			node temp;
+			temp.setDown(NULL);
 			//char* tempChar = new char(l[i]);
-			temp->setCharVariable(l[i]);
+			temp.setCharVariable(l[i]);
 			//temp->displayChar();
-			head.push_back(*temp);	
+			head.push_back(temp);	
 		}
 	}*/
-	for (int i = 1; i < l.length(); i++) {
+	for (int i = 0; i < l.length(); i++) {
+		string substr;
 		if (l[i] == '(') {
-			string sub;
-			node nNode;
-			nNode.setCharVariable(NULL);
-
+			node* tempNode = new node;
+			GL* temp = new GL();
+			int count = 0;
+			tempNode->setCharVariable(NULL);
 			for (int j = i + 1; j < l.length(); j++) {
-				if (l[j] == ')') {
+				if (l[j] == '(') {
+					substr += l[j];
+					count++;
+				}
+				if ((l[j] == ')') && (count != 0)) {
+					substr += l[j];
+					count--;
+				}
+				if ((l[j] == ')') && (count == 0)) {
 					break;
 				}
-				else {
-					sub += l[j];
-				}
 			}
-			GL* newGL = new GL();
-			nNode.setDown(newGL);
-			head.push_back(nNode);
-			newGL->buildGL(sub);
+			head.push_back(*tempNode);
+			temp->buildGL(substr);
+			tempNode->setDown(temp);
+		}
+		else if (l[i] == ')') {
+			substr += l[i];
 		}
 		else {
-			node nNode;
-			nNode.setCharVariable(l[i]);
-			head.push_back(nNode);
+			node* tempNode = new node();
+			tempNode->setCharVariable(l[i]);
+			head.push_back(*tempNode);
+			tempNode->setDown(NULL);
 		}
-		
 	}
+	
 }
 
 bool GL::findCharInExpression(char findThisChar) {
@@ -172,7 +189,7 @@ void GL::searchDuplicates() {
 }
 
 void GL::display() {
-	cout << "Displaying all expressions: ";
+	//cout << "Displaying all expressions: ";
 	list<node>::iterator iter;
 	/*for (int i = 0; i < head.size() - 1; i++) {
 		advance(iter, i);
@@ -183,7 +200,15 @@ void GL::display() {
 		display->displayChar();
 	}*/
 	for (iter = head.begin(); iter != head.end(); iter++) {
-		iter->displayChar();
+		if (iter->getChar() != NULL) {
+			iter->displayChar();
+		}
+		if (iter->getChar() != NULL && *iter->getChar() == ')') {
+			continue;
+		}
+		if (iter->getChar() == NULL) {
+			iter->getDown()->display(); // recursion
+		}
 	}
 
 }
@@ -201,18 +226,21 @@ int main()
 		// read in and process all the options using switch case
 	string first, second, third;
 	cin >> first >> second >> third;
+	cout << "Displaying all expressions: " << endl;
 	expressions[0].buildGL(first);
 	cout << "Expression 0: ";
 	expressions[0].display();
 	cout << endl;
-	//expressions[1].buildGL(second);
-	//cout << endl;
-	//expressions[1].display();
-	//cout << endl;
-	//expressions[2].buildGL(third);
-	//cout << endl;
-	//expressions[2].display();
-	//cout << endl;
+	expressions[1].buildGL(second);
+	cout << endl;
+	cout << "Expression 1: ";
+	expressions[1].display();
+	cout << endl;
+	expressions[2].buildGL(third);
+	cout << endl;
+	cout << "Expression 2: ";
+	expressions[2].display();
+	cout << endl;
 
 	return 0;
 } // main
