@@ -164,15 +164,20 @@ void GL::buildGL(string l) {
 }
 
 bool GL::findCharInExpression(char findThisChar) {
-	for (int i = 0; i < head.size(); i++) {
-		list<node>::iterator iter = head.begin();
-		advance(iter, i);
-		node thisNode = *iter;
-		if (thisNode.getChar() == &findThisChar) {
-			return true;
+	list<node>::iterator iter;
+	for (iter = head.begin(); iter != head.end(); iter++) {
+		if (iter->getChar() != NULL) {
+			if (iter->getChar() == &findThisChar) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		if (iter->getDown() != NULL) {
+			iter->getDown()->findCharInExpression(findThisChar); // recursion
 		}
 	}
-	return false;
 }
 
 int GL::LCAdistance(char char1, char char2) {
@@ -227,5 +232,12 @@ int main()
 		cout << endl;
 	}
 
+	bool find = expressions[0].findCharInExpression('b');
+	if (find == true) {
+		cout << "Find b in 0: " << "found" << endl;
+	}
+	else {
+		cout << "Find b in 0: " << "not found" << endl;
+	}
 	return 0;
 } // main
