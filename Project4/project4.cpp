@@ -78,81 +78,44 @@ GL::GL() {
 
 // operators
 void GL::buildGL(string l) {
-	/*int paraCount = 0; // int var to keep track of how many open (
-	int stringLength = l.length();
-	//string subString;
-	// i starts at 1 since index 0 is (
-	for (int i = 1; i < stringLength; i++) {
-		if (l[i] == '(') { // recursion here
-			// count is still 0 here
-			node temp;
-			temp.setCharVariable(NULL);
-			temp.setDown(NULL);
-			paraCount = 1;
-			//int j = i+1;
-			string subString;
-			subString = subString + l[i];
-			for (int j = i + 1; j < stringLength; j++) {
-				if (l[j] != '(' && l[j] != ')') {
-					subString = subString + l[j];
-				}
-				if (l[j] == '(') {
-					subString = subString + l[j];
-					paraCount++;
-				}
-				// if paraCount >0 then push ) into subString
-				if (l[j] == ')' && paraCount > 0) {
-					subString = subString + l[j];
-					paraCount--;
-				}
-				if (l[j] == ')' && paraCount == 0) {
-					//subString = subString + l[j];
-					break;
-				}
-			}
-			cout << "This sub string is: " << subString << endl; // for debugging
-			GL* tempGL = new GL();
-			tempGL->buildGL(subString); // recursion here, once called, should go to else block
-			temp.setDown(tempGL);
-			head.push_back(temp);
-		}
-		else { // if it's a letter or numeric char, build a node object
-			node temp;
-			temp.setDown(NULL);
-			//char* tempChar = new char(l[i]);
-			temp.setCharVariable(l[i]);
-			//temp->displayChar();
-			head.push_back(temp);	
-		}
-	}*/
 	for (int i = 0; i < l.length(); i++) {
+		// start building substring
 		string substr;
 		if (l[i] == '(') {
 			node* tempNode = new node();
 			GL* temp = new GL();
+			// if first char is (, count begins at 0
 			int count = 0;
 			tempNode->setCharVariable(NULL);
 			for (int j = i + 1; j < l.length(); j++) {
 				if (l[j] == '(') {
+					// for every subsequent (
+					// add to substring, and increase count
 					substr += l[j];
 					count++;
 				}
-				if ((l[j] == ')') && (count != 0)) {
+				if (l[j] == ')' && count > 0) {
+					// if there is ), and count is positive
+					// add to substring, decrease count
 					substr += l[j];
 					count--;
 				}
-				if ((l[j] == ')') && (count == 0)) {
+				if (l[j] == ')' && count == 0) {
+					// should be the last ) of the epxpression
+					// break the loop
 					break;
 				}
 			}
 			head.push_back(*tempNode);
+			// recursion here
 			temp->buildGL(substr);
 			tempNode->setDown(temp);
 		}
 		else if (l[i] == ')') {
+			// add the last ) into substring
 			substr += l[i];
 		}
-		else {
+		else { // base case for recursion
 			node* tempNode = new node();
 			tempNode->setCharVariable(l[i]);
 			head.push_back(*tempNode);
@@ -186,8 +149,12 @@ int GL::LCAdistance(char char1, char char2) {
 int GL::heightOfGL() { // apparently only 4 lines
 	list<node>::iterator iter;
 	for (iter = head.begin(); iter != head.end(); iter++) {
+		//if (iter->getDown() == NULL) {
+			//heightOfGL();
+		//}
 		if (iter->getDown() != NULL) {
 			heightCount++;
+			//heightCount++;
 			heightCount = heightOfGL();
 		}
 	}
