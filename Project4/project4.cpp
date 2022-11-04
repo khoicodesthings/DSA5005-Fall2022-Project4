@@ -1,12 +1,11 @@
 // Project 4
 // Fall 2022
 // Computing Structures
-
 #include <iostream>
 #include <list>     // stl list library
 #include <iterator> // to iterate through the list
 using namespace std;
-
+int heightCount = 1;
 class GL; // prototype for class GL
 // node class to store char and generalized linked list called down
 class node
@@ -185,8 +184,15 @@ int GL::LCAdistance(char char1, char char2) {
 }
 
 int GL::heightOfGL() { // apparently only 4 lines
-	list<node>::iterator iter = head.begin();
-	return 0;
+	list<node>::iterator iter;
+	for (iter = head.begin(); iter != head.end(); iter++) {
+		if (iter->getDown() != NULL) {
+			heightCount++;
+			heightCount = heightOfGL();
+		}
+	}
+	int height = heightCount;
+	return height;
 }
 
 void GL::searchDuplicates() {
@@ -232,12 +238,15 @@ int main()
 		cout << endl;
 	}
 
-	bool find = expressions[0].findCharInExpression('b');
+	/*bool find = expressions[0].findCharInExpression('b');
 	if (find == true) {
 		cout << "Find b in 0: " << "found" << endl;
 	}
 	else {
 		cout << "Find b in 0: " << "not found" << endl;
-	}
+	}*/
+
+	int height = expressions[2].heightOfGL();
+	cout << "Height of expression 2: " << height << endl;
 	return 0;
 } // main
