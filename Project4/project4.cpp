@@ -129,7 +129,7 @@ void GL::buildGL(string l) {
 	for (int i = 0; i < l.length(); i++) {
 		string substr;
 		if (l[i] == '(') {
-			node* tempNode = new node;
+			node* tempNode = new node();
 			GL* temp = new GL();
 			int count = 0;
 			tempNode->setCharVariable(NULL);
@@ -194,9 +194,9 @@ void GL::display() {
 		if (iter->getChar() != NULL) {
 			iter->displayChar();
 		}
-		if (iter->getChar() != NULL && *iter->getChar() == ')') {
+		/*if (iter->getChar() != NULL && *iter->getChar() == ')') {
 			continue;
-		}
+		}*/
 		if (iter->getChar() == NULL) {
 			iter->getDown()->display(); // recursion
 		}
@@ -215,23 +215,6 @@ int main()
 	GL* expressions = new GL[numExpressions]; // an array of expressions / an array of GL objects
 		// read one line/expression at a time and call the buildGL method for each expression[i]
 		// read in and process all the options using switch case
-	/*string first, second, third;
-	cin >> first >> second >> third;
-	cout << "Displaying all expressions: " << endl;
-	expressions[0].buildGL(first);
-	cout << "Expression 0: ";
-	expressions[0].display();
-	cout << endl;
-	expressions[1].buildGL(second);
-	cout << endl;
-	cout << "Expression 1: ";
-	expressions[1].display();
-	cout << endl;
-	expressions[2].buildGL(third);
-	cout << endl;
-	cout << "Expression 2: ";
-	expressions[2].display();
-	cout << endl;*/
 	for (int i = 0; i < numExpressions; i++) {
 		string expression;
 		cin >> expression;
