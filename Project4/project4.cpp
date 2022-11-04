@@ -189,16 +189,7 @@ void GL::searchDuplicates() {
 }
 
 void GL::display() {
-	//cout << "Displaying all expressions: ";
 	list<node>::iterator iter;
-	/*for (int i = 0; i < head.size() - 1; i++) {
-		advance(iter, i);
-		node thisNode = *iter;
-		char* tempChar = thisNode.getChar();
-		node* display = new node();
-		display->setCharVariable(*tempChar);
-		display->displayChar();
-	}*/
 	for (iter = head.begin(); iter != head.end(); iter++) {
 		if (iter->getChar() != NULL) {
 			iter->displayChar();
@@ -224,7 +215,7 @@ int main()
 	GL* expressions = new GL[numExpressions]; // an array of expressions / an array of GL objects
 		// read one line/expression at a time and call the buildGL method for each expression[i]
 		// read in and process all the options using switch case
-	string first, second, third;
+	/*string first, second, third;
 	cin >> first >> second >> third;
 	cout << "Displaying all expressions: " << endl;
 	expressions[0].buildGL(first);
@@ -240,7 +231,18 @@ int main()
 	cout << endl;
 	cout << "Expression 2: ";
 	expressions[2].display();
-	cout << endl;
+	cout << endl;*/
+	for (int i = 0; i < numExpressions; i++) {
+		string expression;
+		cin >> expression;
+		expressions[i].buildGL(expression);
+	}
+	cout << "Displaying all expressions: " << endl;
+	for (int i = 0; i < numExpressions; i++) {
+		cout << "Expression " << i << ": ";
+		expressions[i].display();
+		cout << endl;
+	}
 
 	return 0;
 } // main
