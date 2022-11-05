@@ -201,18 +201,7 @@ int main()
 		cin >> expression;
 		expressions[i].buildGL(expression);
 	}
-	
 
-	/*bool find = expressions[0].findCharInExpression('b');
-	if (find == true) {
-		cout << "Find b in 0: " << "found" << endl;
-	}
-	else {
-		cout << "Find b in 0: " << "not found" << endl;
-	}*/
-
-	// int height = expressions[2].heightOfGL();
-	// cout << "Height of expression 2: " << height << endl;
 	char option;        // command from the input file
 	// read the number of expressions given
 	cin >> option;
