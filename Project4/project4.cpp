@@ -159,18 +159,18 @@ void GL::buildGL(string l) {
 bool GL::findCharInExpression(char findThisChar) {
 	list<node>::iterator iter;
 	for (iter = head.begin(); iter != head.end(); iter++) {
-		if (*iter->getChar() == NULL) {
+		if (iter->getDown() != NULL) {
 			//return true;
 			iter->getDown()->findCharInExpression(findThisChar); // recursion
 		}
-		else if (*iter->getChar() != NULL) {
+		else if (*iter->getChar() == findThisChar) {
 			return true;
 		}
 		//else if (iter->getDown() != NULL) {
 			//iter->getDown()->findCharInExpression(findThisChar); // recursion
 		//}
 		else {
-			return false;
+			continue;
 		}
 	}
 	return false;
@@ -183,14 +183,8 @@ int GL::LCAdistance(char char1, char char2) {
 int GL::heightOfGL() { // apparently only 4 lines
 	list<node>::iterator iter;
 	for (iter = head.begin(); iter != head.end(); iter++) {
-		if (*iter->getChar() != NULL) {
-			//heightCount++;
-			break;
-			//cout << "No recursion here" << endl;
-		}
 		if (iter->getDown() != NULL) {
 			heightCount++;
-			//cout << "Entering recursion" << endl;
 			iter->getDown()->heightOfGL();
 		}
 	}
