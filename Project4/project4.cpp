@@ -163,7 +163,12 @@ int GL::heightOfGL() { // apparently only 4 lines
 }
 
 void GL::searchDuplicates() {
-	list<node>::iterator iter = head.begin();
+	list<node>::iterator iter;
+	//int dupesCount = 0;
+	for (iter = head.begin(); iter != head.end(); iter++) {
+		char thisChar = *iter->getChar();
+
+	}
 }
 
 void GL::display() {
@@ -186,8 +191,6 @@ void GL::display() {
 int main()
 {
 	int numExpressions; // number of expressions
-	//char option;        // command from the input file
-	// read the number of expressions given
 	cin >> numExpressions;
 	cout << "Number of expressions: " << numExpressions << endl;
 	GL* expressions = new GL[numExpressions]; // an array of expressions / an array of GL objects
@@ -198,12 +201,7 @@ int main()
 		cin >> expression;
 		expressions[i].buildGL(expression);
 	}
-	cout << "Displaying all expressions: " << endl;
-	for (int i = 0; i < numExpressions; i++) {
-		cout << "Expression " << i << ": ";
-		expressions[i].display();
-		cout << endl;
-	}
+	
 
 	/*bool find = expressions[0].findCharInExpression('b');
 	if (find == true) {
@@ -213,7 +211,53 @@ int main()
 		cout << "Find b in 0: " << "not found" << endl;
 	}*/
 
-	int height = expressions[2].heightOfGL();
-	cout << "Height of expression 2: " << height << endl;
+	// int height = expressions[2].heightOfGL();
+	// cout << "Height of expression 2: " << height << endl;
+	char option;        // command from the input file
+	// read the number of expressions given
+	cin >> option;
+	while (!cin.eof()) {
+		switch (option) {
+			case 'D': {
+				cout << "Displaying all expressions: " << endl;
+				for (int i = 0; i < numExpressions; i++) {
+					cout << "Expression " << i << ": ";
+					expressions[i].display();
+					cout << endl;
+				}
+				break;
+			}
+			case 'F': {
+				int expressionNo;
+				char findThis;
+				cin >> expressionNo >> findThis;
+				bool exist = expressions[expressionNo].findCharInExpression(findThis);
+				if (exist == true) {
+					cout << "Find " << findThis << " in " << expressionNo << ": found" << endl;
+					break;
+				}
+				else {
+					cout << "Find " << findThis << " in " << expressionNo << ": not found" << endl;
+					break;
+				}
+			}
+			case 'H': {
+				int expressionNo;
+				cin >> expressionNo;
+				int height = expressions[expressionNo].heightOfGL();
+				cout << "Height of expression " << expressionNo << ": " << height << endl;
+				break;
+			}
+			case 'U': {
+				int expressionNo;
+				cin >> expressionNo;
+				cout << "Duplicates in " << expressionNo << ": ";
+				expressions[expressionNo].searchDuplicates();
+				break;
+			}
+			default: cout << "It broke" << endl;
+		}
+		cin >> option;
+	}
 	return 0;
 } // main
