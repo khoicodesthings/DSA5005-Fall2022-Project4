@@ -5,7 +5,7 @@
 #include <list>     // stl list library
 #include <iterator> // to iterate through the list
 using namespace std;
-int heightCount = 1;
+int heightCount = 0;
 class GL; // prototype for class GL
 // node class to store char and generalized linked list called down
 class node
@@ -148,17 +148,18 @@ int GL::LCAdistance(char char1, char char2) {
 int GL::heightOfGL() { // apparently only 4 lines
 	list<node>::iterator iter;
 	for (iter = head.begin(); iter != head.end(); iter++) {
-		//if (iter->getDown() == NULL) {
-			//heightOfGL();
-		//}
-		if (iter->getDown() != NULL) {
+		if (*iter->getChar() != NULL) {
 			heightCount++;
+			break;
+			//cout << "No recursion here" << endl;
+		}
+		if (iter->getDown() != NULL) {
 			//heightCount++;
-			heightCount = heightOfGL();
+			//cout << "Entering recursion" << endl;
+			iter->getDown()->heightOfGL();
 		}
 	}
-	int height = heightCount;
-	return height;
+	return heightCount;
 }
 
 void GL::searchDuplicates() {
@@ -166,6 +167,7 @@ void GL::searchDuplicates() {
 	//int dupesCount = 0;
 	for (iter = head.begin(); iter != head.end(); iter++) {
 		char thisChar = *iter->getChar();
+		
 
 	}
 }
@@ -200,7 +202,6 @@ int main()
 		cin >> expression;
 		expressions[i].buildGL(expression);
 	}
-
 	char option;        // command from the input file
 	// read the number of expressions given
 	cin >> option;
