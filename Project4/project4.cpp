@@ -94,28 +94,32 @@ void GL::buildGL(string l) {
 			for (int j = i + 1; j < l.length(); j++) {
 				// if char is (, increase counter by 1
 				if (l[j] == '(') {
+					//cout << "Found (, increasing counter" << endl;
 					subString += l[j];
 					paraCounter++;
 				}
 				// if char is ), decrease counter by 1
 				else if (l[j] == ')') {
+					//cout << "Found ), decreasing counter" << endl;
 					subString += l[j];
 					paraCounter--;
 				}
 				// if paraCounter is 0
 				// that means all the parentheses
 				// have been accounted for
-				if (paraCounter == 0) {
+				if (l[j] == ')' && paraCounter == 0) {
 					// build the substring, j - i is in between
 					// the ( and ); add 1 for the last )
 					// due to the outter for loop condition
 					
 					// visual studio suggested this casting operation
 					// to prevent overflow
+					//cout << "Found ), counter is 0" << endl;
 					subString = l.substr(i, static_cast<std::basic_string<char, std::char_traits<char>, std::allocator<char>>::size_type>(j) - i + 1);
 					//subString += l[j];
 					// recursion here
 					tempGL->buildGL(subString);
+					//tempNode->setCharVariable(NULL);
 					tempNode->setDown(tempGL);
 					head.push_back(*tempNode);
 					i = j; // set i = j to skip parenthesis
@@ -124,6 +128,7 @@ void GL::buildGL(string l) {
 			}
 		}
 		else { // base case for recursion
+			//cout << "Base case here" << endl;
 			node* tempNode = new node();
 			tempNode->setCharVariable(l[i]);
 			head.push_back(*tempNode);
