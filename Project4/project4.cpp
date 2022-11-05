@@ -1,6 +1,8 @@
 // Project 4
 // Fall 2022
 // Computing Structures
+// Khoi Trinh
+
 #include <iostream>
 #include <list>     // stl list library
 #include <iterator> // to iterate through the list
@@ -78,80 +80,43 @@ GL::GL() {
 
 // operators
 void GL::buildGL(string l) {
-	//for (int i = 0; i < l.length(); i++) {
-	//	// start building substring
-	//	string substr;
-	//	if (l[i] == '(') {
-	//		node* tempNode = new node();
-	//		GL* temp = new GL();
-	//		// if first char is (, count begins at 0
-	//		int count = 0;
-	//		tempNode->setCharVariable(NULL);
-	//		for (int j = i + 1; j < l.length(); j++) {
-	//			if (l[j] == '(') {
-	//				// for every subsequent (
-	//				// add to substring, and increase count
-	//				substr += l[j];
-	//				count++;
-	//			}
-	//			if (l[j] == ')' && count > 0) {
-	//				// if there is ), and count is positive
-	//				// add to substring, decrease count
-	//				substr += l[j];
-	//				count--;
-	//			}
-	//			if (l[j] == ')' && count == 0) {
-	//				// should be the last ) of the epxpression
-	//				// break the loop
-	//				break;
-	//			}
-	//		}
-	//		head.push_back(*tempNode);
-	//		// recursion here
-	//		temp->buildGL(substr);
-	//		tempNode->setDown(temp);
-	//	}
-	//	else if (l[i] == ')') {
-	//		// add the last ) into substring
-	//		substr += l[i];
-	//	}
-	//	else { // base case for recursion
-	//		node* tempNode = new node();
-	//		tempNode->setCharVariable(l[i]);
-	//		head.push_back(*tempNode);
-	//		tempNode->setDown(NULL);
-	//	}
-	//}
 	for (int i = 1; i < l.length() - 1; i++) {
 		if (l[i] == '(') {
-			node nNode;
-			GL* newGL = new GL();
-			string sub;
-			int pCounter = 1;
+			// if the character is a (
+			// start building the substring from ( to the )
+			// then recursively call buildGL on that substring
+			node* tempNode = new node();
+			GL* tempGL = new GL();
+			string subString;
+			// keep track of the open (
+			int paraCounter = 1;
 
 			for (int j = i + 1; j < l.length(); j++) {
 				if (l[j] == '(') {
-					pCounter++;
+					paraCounter++;
 				}
 				else if (l[j] == ')') {
-					pCounter--;
+					paraCounter--;
 				}
 
-				if (pCounter == 0) {
-					sub = l.substr(i, j - i + 1);
-					newGL->buildGL(sub);
-					nNode.setDown(newGL);
-					head.push_back(nNode);
-					i = j;
+				if (paraCounter == 0) {
+					// build the substring, j - i is in between
+					// the ( and ); add 1 for the last )
+					// due to the outter for loop condition
+					subString = l.substr(i, j - i + 1);
+					// recursion here
+					tempGL->buildGL(subString);
+					tempNode->setDown(tempGL);
+					head.push_back(*tempNode);
+					i = j; // set i = j to skip parenthesis
 					break;
 				}
 			}
 		}
-		else {
-			node nNode;
-			nNode.setCharVariable(l[i]);
-			nNode.setDown(NULL);
-			head.push_back(nNode);
+		else { // base case for recursion
+			node* tempNode = new node();
+			tempNode->setCharVariable(l[i]);
+			head.push_back(*tempNode);
 		}
 	}
 }
@@ -196,7 +161,14 @@ void GL::searchDuplicates() {
 	//int dupesCount = 0;
 	for (iter = head.begin(); iter != head.end(); iter++) {
 		char thisChar = *iter->getChar();
-		
+		bool findThis = findCharInExpression(thisChar);
+		if (findThis = true) {
+			cout << thisChar << endl;
+			break;
+		}
+		else {
+			searchDuplicates();
+		}
 
 	}
 }
@@ -270,7 +242,7 @@ int main()
 				int expressionNo;
 				cin >> expressionNo;
 				cout << "Duplicates in " << expressionNo << ": ";
-				//expressions[expressionNo].searchDuplicates();
+				expressions[expressionNo].searchDuplicates();
 				break;
 			}
 			default: cout << "It broke" << endl;
@@ -278,4 +250,4 @@ int main()
 		cin >> option;
 	}
 	return 0;
-} // main
+}
