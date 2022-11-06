@@ -80,7 +80,7 @@ GL::GL() {
 
 // operators
 void GL::buildGL(string l) {
-	for (int i = 1; i < l.length() - 1; i++) {
+	for (int i = 1; i < l.length(); i++) {
 		if (l[i] == '(') {
 			// if the character is a (
 			// start building the substring from ( to the )
@@ -99,7 +99,7 @@ void GL::buildGL(string l) {
 					paraCounter++;
 				}
 				// if char is ), decrease counter by 1
-				else if (l[j] == ')') {
+				if (l[j] == ')' && paraCounter > 0) {
 					//cout << "Found ), decreasing counter" << endl;
 					subString += l[j];
 					paraCounter--;
@@ -108,21 +108,16 @@ void GL::buildGL(string l) {
 				// that means all the parentheses
 				// have been accounted for
 				if (l[j] == ')' && paraCounter == 0) {
-					// build the substring, j - i is in between
-					// the ( and ); add 1 for the last )
-					// due to the outter for loop condition
-					
-					// visual studio suggested this casting operation
-					// to prevent overflow
+					// build the substring, j - i is in between the ( and )
 					//cout << "Found ), counter is 0" << endl;
-					subString = l.substr(i, static_cast<std::basic_string<char, std::char_traits<char>, std::allocator<char>>::size_type>(j) - i + 1);
+					// trying substr instead of the + operation to add multiple characters
+					subString = l.substr(i, j - i);
 					//subString += l[j];
 					// recursion here
 					tempGL->buildGL(subString);
-					//tempNode->setCharVariable(NULL);
 					tempNode->setDown(tempGL);
 					head.push_back(*tempNode);
-					i = j; // set i = j to skip parenthesis
+					i = j; // set i = j to "catch" i up to j
 					break;
 				}
 			}
@@ -191,12 +186,12 @@ void GL::searchDuplicates() {
 void GL::display() {
 	list<node>::iterator iter;
 	for (iter = head.begin(); iter != head.end(); iter++) {
+		if (iter->getChar() != NULL && *iter->getChar() == ')') {
+			continue;
+		}
 		if (iter->getChar() != NULL) {
 			iter->displayChar();
 		}
-		/*if (iter->getChar() != NULL && *iter->getChar() == ')') {
-			continue;
-		}*/
 		if (iter->getChar() == NULL) {
 			iter->getDown()->display(); // recursion
 		}
@@ -251,6 +246,8 @@ int main()
 				cin >> expressionNo;
 				int height = expressions[expressionNo].heightOfGL();
 				cout << "Height of expression " << expressionNo << ": " << height << endl;
+				// reset global heightCount variable back to 1 for the next run
+				heightCount = 1;
 				break;
 			}
 			case 'U': {
