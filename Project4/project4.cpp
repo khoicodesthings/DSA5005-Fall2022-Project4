@@ -80,6 +80,7 @@ GL::GL() {
 
 // operators
 void GL::buildGL(string l) {
+	// starts i at 1 to skip the first (
 	for (int i = 1; i < l.length(); i++) {
 		if (l[i] == '(') {
 			// if the character is a (
@@ -89,6 +90,7 @@ void GL::buildGL(string l) {
 			GL* tempGL = new GL();
 			string subString;
 			// keep track of the open (
+			// right now, starts at 1
 			int paraCounter = 1;
 
 			for (int j = i + 1; j < l.length(); j++) {
