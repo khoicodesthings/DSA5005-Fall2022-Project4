@@ -91,38 +91,41 @@ void GL::buildGL(string l) {
 			string subString;
 			// keep track of the open (
 			// right now, starts at 1
-			int paraCounter = 1;
-
+			int count = 1;
+			// inner loop starts from the next index of the string
 			for (int j = i + 1; j < l.length(); j++) {
-				// if char is (, increase counter by 1
 				if (l[j] == '(') {
+					// if char is (
+					// add to substring
+					// increase counter by 1
 					//cout << "Found (, increasing counter" << endl;
 					subString += l[j];
-					paraCounter++;
+					count++;
 				}
-				// if char is ), decrease counter by 1
-				if (l[j] == ')' && paraCounter > 0) {
+				if (l[j] == ')' && count > 0) {
+					// if char is ) and count is positive
+					// add to substring
+					// decrease counter by 1
 					//cout << "Found ), decreasing counter" << endl;
 					subString += l[j];
-					paraCounter--;
+					count--;
 				}
-				// if paraCounter is 0
-				// that means all the parentheses
-				// have been accounted for
-				if (l[j] == ')' && paraCounter == 0) {
+				if (l[j] == ')' && count == 0) {
+					// if char is ) and count is 0
+					// this is the last ) of the expression
 					// build the substring, j - i is in between the ( and )
 					//cout << "Found ), counter is 0" << endl;
 					// trying substr instead of the + operation to add multiple characters
-					subString = l.substr(i, j - i);
-					//subString += l[j];
-					// recursion here
-					tempGL->buildGL(subString);
-					tempNode->setDown(tempGL);
-					head.push_back(*tempNode);
+					subString = l.substr(i, j - i + 1); // + 1 to add the last ) to complete the pair
 					i = j; // set i = j to "catch" i up to j
-					break;
+					break; // substring is done, break the inner for loop to start recursion
 				}
 			}
+			// recursion here
+			// cout << "substring is: " << subString << endl;
+			tempGL->buildGL(subString);
+			tempNode->setDown(tempGL);
+			head.push_back(*tempNode);
 		}
 		else { // base case for recursion
 			//cout << "Base case here" << endl;
