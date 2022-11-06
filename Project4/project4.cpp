@@ -142,11 +142,14 @@ bool GL::findCharInExpression(char findThisChar) {
 		if (iter->getDown() != NULL) {
 			iter->getDown()->findCharInExpression(findThisChar); // recursion
 		}
-		else if (*iter->getChar() == findThisChar) {
+		/*else if (*iter->getChar() == findThisChar) {
 			return true;
-		}
-		else {
-			continue;
+		}*/
+		if (iter->getDown() == NULL) {
+			char thisChar = *iter->getChar();
+			if (thisChar == findThisChar) {
+				return true;
+			}
 		}
 	}
 	return false;
