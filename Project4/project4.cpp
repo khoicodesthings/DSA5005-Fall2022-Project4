@@ -9,6 +9,8 @@
 using namespace std;
 // global variable to keep track of GL height
 int heightCount = 1;
+char mylist[20] = { };
+int search_counter = 0;
 class GL; // prototype for class GL
 // node class to store char and generalized linked list called down
 class node
@@ -124,8 +126,9 @@ void GL::buildGL(string l) {
 				}
 			}
 			// recursion here
-			// cout << "substring is: " << subString << endl;
+			//cout << "substring is: " << subString << endl;
 			tempGL->buildGL(subString);
+			//tempNode->setCharVariable(NULL);
 			tempNode->setDown(tempGL);
 			head.push_back(*tempNode);
 		}
@@ -144,17 +147,19 @@ bool GL::findCharInExpression(char findThisChar) {
 	for (iter = head.begin(); iter != head.end(); iter++) {
 		if (iter->getDown() != NULL) {
 			returnThis = false;
-			iter->getDown()->findCharInExpression(findThisChar); // recursion
+			GL* temp = iter->getDown();
+			temp->findCharInExpression(findThisChar); // recursion
 		}
 		if (iter->getDown() == NULL) {
 			char thisChar = *iter->getChar();
 			if (thisChar == findThisChar) {
 				returnThis = true;
+				break;
 			}
 		}
-		if (returnThis == true) {
+		/*if (returnThis == true) {
 			return returnThis;
-		}
+		}*/
 	}
 	return returnThis;
 }
@@ -178,7 +183,7 @@ int GL::heightOfGL() { // apparently only 4 lines
 }
 
 void GL::searchDuplicates() {
-	list<node>::iterator iter;
+	/*list<node>::iterator iter;
 	// loop through head, get the current char
 	// use the findChar method
 	// if true, print out char and done
@@ -194,6 +199,38 @@ void GL::searchDuplicates() {
 		else {
 			iter->getDown()->searchDuplicates();
 		}
+	}*/
+	list<node>::iterator it = head.begin();
+	node temp;
+	char* t = new char;
+	GL* tempGL = new GL();
+	for (int i = 0; i < head.size(); i++)
+	{
+		temp = *it;
+		t = temp.getChar();
+		//if ((t != NULL) && (t[0] == '\0'))
+		if (temp.getDown() != NULL)
+		{
+			tempGL = temp.getDown();
+			tempGL->searchDuplicates();
+		}
+		else
+		{
+			mylist[search_counter] = *t;
+			search_counter++;
+			for (int j = 0; j < (search_counter - 1); j++)
+			{
+				if (mylist[search_counter - 1] == mylist[j])
+				{
+					cout << mylist[j] << " ";
+				}
+			}
+		}
+		it++;
+	}
+	if (search_counter == 0)
+	{
+		cout << "none";
 	}
 }
 
@@ -277,6 +314,10 @@ int main()
 				cin >> expressionNo;
 				cout << "Duplicates in " << expressionNo << ": ";
 				expressions[expressionNo].searchDuplicates();
+				search_counter = 0;
+				for (int i = 0; i < 20; i++) {
+					mylist[i] = '\0';
+				}
 				break;
 			}
 			default: cout << "It broke :(" << endl;
