@@ -7,6 +7,7 @@
 #include <list>     // stl list library
 #include <iterator> // to iterate through the list
 using namespace std;
+// global variable to keep track of GL height
 int heightCount = 1;
 class GL; // prototype for class GL
 // node class to store char and generalized linked list called down
@@ -144,9 +145,6 @@ bool GL::findCharInExpression(char findThisChar) {
 			returnThis = false;
 			iter->getDown()->findCharInExpression(findThisChar); // recursion
 		}
-		/*else if (*iter->getChar() == findThisChar) {
-			return true;
-		}*/
 		if (iter->getDown() == NULL) {
 			char thisChar = *iter->getChar();
 			if (thisChar == findThisChar) {
