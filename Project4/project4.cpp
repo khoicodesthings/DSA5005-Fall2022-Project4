@@ -184,7 +184,7 @@ void GL::searchDuplicates() {
 			bool findThis = findCharInExpression(thisChar);
 			if (findThis = true) {
 				cout << thisChar << " ";
-				//break;
+				break;
 			}
 		}
 		else {
