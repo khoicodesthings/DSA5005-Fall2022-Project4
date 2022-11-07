@@ -153,6 +153,9 @@ bool GL::findCharInExpression(char findThisChar) {
 				returnThis = true;
 			}
 		}
+		if (returnThis == true) {
+			return returnThis;
+		}
 	}
 	return returnThis;
 }
@@ -176,16 +179,17 @@ void GL::searchDuplicates() {
 	list<node>::iterator iter;
 	//int dupesCount = 0;
 	for (iter = head.begin(); iter != head.end(); iter++) {
-		char thisChar = *iter->getChar();
-		bool findThis = findCharInExpression(thisChar);
-		if (findThis = true) {
-			cout << thisChar << endl;
-			break;
+		if (iter->getDown() == NULL) {
+			char thisChar = *iter->getChar();
+			bool findThis = findCharInExpression(thisChar);
+			if (findThis = true) {
+				cout << thisChar << " ";
+				//break;
+			}
 		}
 		else {
-			searchDuplicates();
+			iter->getDown()->searchDuplicates();
 		}
-
 	}
 }
 
