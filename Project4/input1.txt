@@ -1,7 +1,7 @@
 3
 (abc)
 (ab(cd)e)
-(a((ef)a)c)
+(a((eef)a)cc)
 
 D
 F 0 b
