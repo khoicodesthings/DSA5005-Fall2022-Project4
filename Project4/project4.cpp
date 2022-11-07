@@ -9,8 +9,10 @@
 using namespace std;
 // global variable to keep track of GL height
 int heightCount = 1;
-char mylist[20] = { };
-int search_counter = 0;
+// global array of char to for search duplicates
+char charlist[20] = { };
+// global search index for search duplicates
+int search = 0;
 class GL; // prototype for class GL
 // node class to store char and generalized linked list called down
 class node
@@ -191,13 +193,13 @@ void GL::searchDuplicates() {
 		}
 		else
 		{
-			mylist[search_counter] = *iter->getChar();
-			search_counter++;
-			for (int j = 0; j < (search_counter - 1); j++)
+			charlist[search] = *iter->getChar();
+			search++;
+			for (int j = 0; j < (search - 1); j++)
 			{
-				if (mylist[search_counter - 1] == mylist[j])
+				if (charlist[search - 1] == charlist[j])
 				{
-					cout << mylist[j] << " ";
+					cout << charlist[j] << " ";
 				}
 			}
 		}
@@ -284,10 +286,10 @@ int main()
 				cin >> expressionNo;
 				cout << "Duplicates in " << expressionNo << ": ";
 				expressions[expressionNo].searchDuplicates();
-				// reset search counter and mylist
-				search_counter = 0;
+				// reset search index and char list
+				search = 0;
 				for (int i = 0; i < 20; i++) {
-					mylist[i] = '\0';
+					charlist[i] = '\0';
 				}
 				break;
 			}
