@@ -183,40 +183,15 @@ int GL::heightOfGL() { // apparently only 4 lines
 }
 
 void GL::searchDuplicates() {
-	/*list<node>::iterator iter;
-	// loop through head, get the current char
-	// use the findChar method
-	// if true, print out char and done
-	for (iter = head.begin(); iter != head.end(); iter++) {
-		if (iter->getDown() == NULL) {
-			char thisChar = *iter->getChar();
-			bool findThis = findCharInExpression(thisChar);
-			if (findThis = true) {
-				cout << thisChar << " ";
-				break;
-			}
-		}
-		else {
-			iter->getDown()->searchDuplicates();
-		}
-	}*/
-	list<node>::iterator it = head.begin();
-	node temp;
-	char* t = new char;
-	GL* tempGL = new GL();
-	for (int i = 0; i < head.size(); i++)
+	for (list<node>::iterator iter = head.begin(); iter != head.end(); iter++)
 	{
-		temp = *it;
-		t = temp.getChar();
-		//if ((t != NULL) && (t[0] == '\0'))
-		if (temp.getDown() != NULL)
+		if (iter->getDown() != NULL)
 		{
-			tempGL = temp.getDown();
-			tempGL->searchDuplicates();
+			iter->getDown()->searchDuplicates();
 		}
 		else
 		{
-			mylist[search_counter] = *t;
+			mylist[search_counter] = *iter->getChar();
 			search_counter++;
 			for (int j = 0; j < (search_counter - 1); j++)
 			{
@@ -226,11 +201,6 @@ void GL::searchDuplicates() {
 				}
 			}
 		}
-		it++;
-	}
-	if (search_counter == 0)
-	{
-		cout << "none";
 	}
 }
 
@@ -314,6 +284,7 @@ int main()
 				cin >> expressionNo;
 				cout << "Duplicates in " << expressionNo << ": ";
 				expressions[expressionNo].searchDuplicates();
+				// reset search counter and mylist
 				search_counter = 0;
 				for (int i = 0; i < 20; i++) {
 					mylist[i] = '\0';
