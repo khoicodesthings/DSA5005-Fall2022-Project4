@@ -185,21 +185,28 @@ int GL::heightOfGL() { // apparently only 4 lines
 }
 
 void GL::searchDuplicates() {
+	// loop through head of the expression
 	for (list<node>::iterator iter = head.begin(); iter != head.end(); iter++)
-	{
+	{	
+		// if any down pointer is not NULL
+		// recursion case
 		if (iter->getDown() != NULL)
 		{
 			iter->getDown()->searchDuplicates();
 		}
+		// base case
 		else
-		{
+		{	
+			// get the current character and
+			// insert it into the global char array
 			charlist[search] = *iter->getChar();
+			// increment index
 			search++;
-			for (int j = 0; j < (search - 1); j++)
+			for (int i = 0; i < search - 1; i++)
 			{
-				if (charlist[search - 1] == charlist[j])
+				if (charlist[search - 1] == charlist[i])
 				{
-					cout << charlist[j] << " ";
+					cout << charlist[i] << " ";
 				}
 			}
 		}
