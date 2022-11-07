@@ -82,7 +82,8 @@ GL::GL() {
 // operators
 void GL::buildGL(string l) {
 	// starts i at 1 to skip the first (
-	for (int i = 1; i < l.length(); i++) {
+	// ends at length - 1 to skip the last )
+	for (int i = 1; i < l.length() - 1; i++) {
 		if (l[i] == '(') {
 			// if the character is a (
 			// start building the substring from ( to the )
@@ -200,9 +201,11 @@ void GL::display() {
 	list<node>::iterator iter;
 	for (iter = head.begin(); iter != head.end(); iter++) {
 		// don't print )
-		if (iter->getChar() != NULL && *iter->getChar() == ')') {
+		// don't need this condition anymore since buildGL
+		// skipped the last )
+		/*if (iter->getChar() != NULL && *iter->getChar() == ')') {
 			continue;
-		}
+		}*/
 		// base case, if there is char
 		// print it
 		if (iter->getChar() != NULL) {
