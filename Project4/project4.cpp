@@ -166,9 +166,12 @@ int GL::LCAdistance(char char1, char char2) {
 
 int GL::heightOfGL() { // apparently only 4 lines
 	list<node>::iterator iter;
+	// loop through head, if any down pointer is null, then increase
+	// heightCount and recursively call the method again
 	for (iter = head.begin(); iter != head.end(); iter++) {
 		if (iter->getDown() != NULL) {
 			heightCount++;
+			// recursion here
 			iter->getDown()->heightOfGL();
 		}
 	}
@@ -177,7 +180,9 @@ int GL::heightOfGL() { // apparently only 4 lines
 
 void GL::searchDuplicates() {
 	list<node>::iterator iter;
-	//int dupesCount = 0;
+	// loop through head, get the current char
+	// use the findChar method
+	// if true, print out char and done
 	for (iter = head.begin(); iter != head.end(); iter++) {
 		if (iter->getDown() == NULL) {
 			char thisChar = *iter->getChar();
@@ -196,12 +201,17 @@ void GL::searchDuplicates() {
 void GL::display() {
 	list<node>::iterator iter;
 	for (iter = head.begin(); iter != head.end(); iter++) {
+		// don't print )
 		if (iter->getChar() != NULL && *iter->getChar() == ')') {
 			continue;
 		}
+		// base case, if there is char
+		// print it
 		if (iter->getChar() != NULL) {
 			iter->displayChar();
 		}
+		// recursion if char is null
+		// use method on down pointer
 		if (iter->getChar() == NULL) {
 			iter->getDown()->display(); // recursion
 		}
@@ -227,6 +237,7 @@ int main()
 	// read the number of expressions given
 	cin >> option;
 	while (!cin.eof()) {
+		// switch case to cover all the options
 		switch (option) {
 			case 'D': {
 				cout << "Displaying all expressions: " << endl;
@@ -267,7 +278,7 @@ int main()
 				expressions[expressionNo].searchDuplicates();
 				break;
 			}
-			default: cout << "It broke" << endl;
+			default: cout << "It broke :(" << endl;
 		}
 		cin >> option;
 	}
