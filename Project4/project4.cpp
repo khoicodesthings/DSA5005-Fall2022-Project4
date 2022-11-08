@@ -13,6 +13,8 @@ int heightCount = 1;
 char charlist[20] = { };
 // global search index for search duplicates
 int search = 0;
+// global flag for duplicates
+bool duplicates = false;
 class GL; // prototype for class GL
 // node class to store char and generalized linked list called down
 class node
@@ -148,20 +150,22 @@ bool GL::findCharInExpression(char findThisChar) {
 	bool returnThis = false;
 	for (iter = head.begin(); iter != head.end(); iter++) {
 		if (iter->getDown() != NULL) {
-			returnThis = false;
 			GL* temp = iter->getDown();
-			temp->findCharInExpression(findThisChar); // recursion
+			// update return value
+			returnThis = temp->findCharInExpression(findThisChar); // recursion
+			// use this to break out of recursion
+			// as soon as the char is found
+			if (returnThis == true) {
+				return returnThis;
+			}
 		}
-		if (iter->getDown() == NULL) {
+		else if (iter->getDown() == NULL) {
 			char thisChar = *iter->getChar();
 			if (thisChar == findThisChar) {
 				returnThis = true;
 				break;
 			}
 		}
-		/*if (returnThis == true) {
-			return returnThis;
-		}*/
 	}
 	return returnThis;
 }
@@ -186,31 +190,33 @@ int GL::heightOfGL() { // apparently only 4 lines
 
 void GL::searchDuplicates() {
 	// loop through head of the expression
-	for (list<node>::iterator iter = head.begin(); iter != head.end(); iter++)
-	{	
+	for (list<node>::iterator iter = head.begin(); iter != head.end(); iter++) {	
 		// if any down pointer is not NULL
 		// recursion case
-		if (iter->getDown() != NULL)
-		{
+		if (iter->getDown() != NULL) {
 			iter->getDown()->searchDuplicates();
 		}
 		// base case
-		else
-		{	
+		else {	
 			// get the current character and
 			// insert it into the global char array
 			charlist[search] = *iter->getChar();
 			// increment index
 			search++;
-			for (int i = 0; i < search - 1; i++)
-			{
-				if (charlist[search - 1] == charlist[i])
-				{
+			// loop through the char array
+			for (int i = 0; i < search - 1; i++) {
+				// if any pair matches, print it out
+				if (charlist[search - 1] == charlist[i]) {
+					duplicates = true;
 					cout << charlist[i] << " ";
 				}
 			}
 		}
+		if (duplicates = false) {
+			cout << "None" << endl;
+		}
 	}
+	
 }
 
 void GL::display() {
@@ -256,7 +262,7 @@ int main()
 	while (!cin.eof()) {
 		// switch case to cover all the options
 		switch (option) {
-			case 'D': {
+			case 'D': { // display the lists
 				cout << "Displaying all expressions: " << endl;
 				for (int i = 0; i < numExpressions; i++) {
 					cout << "Expression " << i << ": ";
@@ -265,10 +271,11 @@ int main()
 				}
 				break;
 			}
-			case 'F': {
+			case 'F': { // find a particular char in a list
 				int expressionNo;
 				char findThis;
 				cin >> expressionNo >> findThis;
+				// call the method
 				bool exist = expressions[expressionNo].findCharInExpression(findThis);
 				if (exist == true) {
 					cout << "Find " << findThis << " in " << expressionNo << ": found" << endl;
@@ -279,25 +286,30 @@ int main()
 					break;
 				}
 			}
-			case 'H': {
+			case 'H': { // find the height of a list
 				int expressionNo;
 				cin >> expressionNo;
+				// call the method
 				int height = expressions[expressionNo].heightOfGL();
 				cout << "Height of expression " << expressionNo << ": " << height << endl;
 				// reset global heightCount variable back to 1 for the next run
 				heightCount = 1;
 				break;
 			}
-			case 'U': {
+			case 'U': { // find duplicates characters in a list
 				int expressionNo;
 				cin >> expressionNo;
 				cout << "Duplicates in " << expressionNo << ": ";
+				// call the method
 				expressions[expressionNo].searchDuplicates();
-				// reset search index and char list
+				// reset search index and char list for the next run
 				search = 0;
 				for (int i = 0; i < 20; i++) {
 					charlist[i] = '\0';
 				}
+				// reset global flag for the next run
+				duplicates = false;
+				cout << endl;
 				break;
 			}
 			default: cout << "It broke :(" << endl;
